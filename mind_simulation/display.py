@@ -69,7 +69,7 @@ class Display:
                 print(f"    {_c(_DIM, 'would say ')} : {_c(color, p.proposed_answer)}")
 
         print()
-        print(f"  {_c(_JUDGE_COLOR, 'judge')} after round {len(all_rounds)}: {_c(_JUDGE_COLOR, verdict.reason)}")
+        print(f"  {_c(_JUDGE_COLOR, 'Judge')} after round {len(all_rounds)}: {_c(_JUDGE_COLOR, verdict.reason)}")
         print()
         winner_color = self._color(verdict.winner or "")
         _sep(_c(winner_color, _BOLD, f"{verdict.winner} speaks"))

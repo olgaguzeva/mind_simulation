@@ -135,56 +135,70 @@ python main.py
 ## Example session
 
 ```
-You: I got a promotion offer but I'm not sure I should take it.
+You: should I play the video game or do the dishes?
 
 ────────────────────────────────────────────────────────────────
-  inner parliament
+  Inner crowd
 ────────────────────────────────────────────────────────────────
 
   ── round 1 ──
 
-  [Teacher]  ████████░░░░  0.82
-    to others : We cannot take this. More responsibilities means more chances to fail.
-    feels     : anxious, scanning for danger
-    would say : Thank you, but I need more time to think.
+  [Child]  ██████████░░  0.80
+    to others  : I really want to play the video game, it looks so much fun
+    feels      : excitement and a little bit of guilt
+    would say  : Can I please play the video game for a little bit and then I'll do the dishes, I promise
 
-  [Child]  ██████░░░░░░  0.71
-    to others : What if they expect too much and I disappoint everyone?
-    feels     : terrified of being seen and found lacking
-    would say : I'm not ready for that yet.
+  [Critic]  ██████████░░  0.80
+    to others  : Let's think this through, doing the dishes needs to be done and putting it off will only make it worse, but playing the video game can be a nice break
+    feels      : anxiety about the dishes piling up and guilt about procrastinating
+    would say  : I should do the dishes first, it's not the most exciting task, but it's the responsible thing to do and it'll be better to get it out of the way
 
-  [Self]  █████░░░░░░░  0.48
-    to others : This is exactly what we've been working toward. Don't let fear decide.
-    feels     : calm but outnumbered
-    would say : Yes, I'd love to. When do we start?
+  [Self]  ████████░░░░  0.70
+    to others  : Let's take a moment to consider what needs to be done and what we really want to do.
+    feels      : a sense of responsibility mixed with a desire to relax
+    would say  : Why don't I do the dishes first and then reward myself with some time playing the video game?
 
   ── round 2 ──
 
-  [Teacher]  █████████░░░  0.88
-    to others : Child, you feel it too — this is too much exposure. Self, you're reckless.
-    feels     : righteous, closing ranks
-    would say : I appreciate the offer, but I need more time.
+  [Child]  ███████████░  0.90
+    to others  : I don't want to do the dishes, it's so boring and I was really looking forward to playing the game
+    feels      : excitement and a little bit of fear that I'll get in trouble for not doing the dishes
+    would say  : can't I just play the game for a little bit and then do the dishes later?
 
-  [Child]  ███████░░░░░  0.74
-    to others : Teacher is right. What if we fail in front of everyone?
-    feels     : retreating, looking for cover
-    would say : Maybe later, when I'm more ready.
+  [Critic]  ███████████░  0.90
+    to others  : Let's not forget about the dishes, they're not going to do themselves and it's only going to get worse if we put it off
+    feels      : a sense of unease and responsibility
+    would say  : Let's do the dishes first, it's not going to take that long and then we can play the video game without feeling guilty or worried about the mess
 
-  [Self]  ████░░░░░░░░  0.39
-    to others : You're both choosing fear again. This is a pattern, not wisdom.
-    feels     : frustrated but losing ground
-    would say : I'd love to take it. Let's talk about what support I'd need.
+  [Self]  ██████████░░  0.85
+    to others  : Let's weigh the importance of both tasks and consider how they align with our current needs and priorities.
+    feels      : A sense of balance and responsibility, with a hint of temptation to indulge in the video game.
+    would say  : Why don't we do the dishes first and then reward ourselves with some time playing the video game, that way we can feel responsible and also have some fun.
 
-  judge after round 2: Teacher and Child have formed a coalition with activations of
-  0.88 and 0.74, while Self has dropped to 0.39 and is not gaining traction.
-  The avoidance voices clearly dominate.
+  ── round 3 ──
+
+  [Child]  ███████████░  0.95
+    to others  : I really don't want to do the dishes, it's so boring and I was really looking forward to playing the game
+    feels      : I feel frustrated and disappointed that I might have to put off playing the game
+    would say  : Can't I just play the game for a little while and then do the dishes later, please?
+
+  [Critic]  ███████████░  0.95
+    to others  : Let's not rush into playing the game, we need to consider the consequences of leaving the dishes undone
+    feels      : Anxiety about the potential mess and stress of delaying the dishes
+    would say  : Let's do the dishes first, it's a responsible thing to do and will save us from more trouble later
+
+  [Self]  ███████████░  0.92
+    to others  : Let's find a balance between responsibility and enjoyment, perhaps we can do the dishes first and then play the video game as a reward
+    feels      : A sense of calm and fairness, trying to mediate between the desire for fun and the need for responsibility
+    would say  : Why don't we compromise and do the dishes first, then we can play the video game without feeling guilty or overwhelmed by the mess?
+
+  Judge after round 3: Self's activation is high and its suggestion to find a balance between responsibility and enjoyment has addressed the key tension between the Child's desire to play and the need to do the dishes.
 
 ────────────────────────────────────────────────────────────────
-  Teacher speaks
+  Self speaks
 ────────────────────────────────────────────────────────────────
 
-Thank you so much — I'm genuinely flattered. I just want to make sure I can
-do it properly, so I'd like a few days to think it over if that's alright.
+Let's do the dishes first, it's not the most exciting task, but getting it out of the way will actually make playing the video game more enjoyable, and we can do it without feeling guilty or worried about the mess. Plus, it's a good way to clear our head and make some space before diving into the game. Once the dishes are done, we can fully focus on having fun and relaxing with the game.
 ```
 
 ## Project structure
