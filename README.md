@@ -1,5 +1,7 @@
 # Mind Simulation
 
+![](images/banner.jpg)
+
 ## Introduction
 Mind Simulation is an experimental project exploring what happens when multiple AI agents behave as different inner sub-personalities of a single mind.  
 The idea was inspired by the Internal Family Systems (IFS) approach, which views the mind as a collection of different “parts” or inner personalities, each with its own emotions, motivations, and perspective.  
