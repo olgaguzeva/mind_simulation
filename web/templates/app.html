@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mind Simulation</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="app-page">
+
+<nav class="app-nav">
+  <div class="app-nav-left">
+    <a href="/" class="nav-logo">Mind <span>Simulation</span></a>
+    <a href="/" class="btn btn-ghost app-nav-btn">Home</a>
+  </div>
+</nav>
+
+<div class="app-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Personalities</h2>
+    </div>
+    <div class="sidebar-body" id="personalities-list">
+      <!-- cards injected by JS -->
+    </div>
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-add">
+        <button class="btn btn-add" id="add-btn" onclick="addCard()">+ Add</button>
+        <label class="btn btn-add btn-upload-bulk" id="upload-bulk-btn">
+          ↑ Upload files
+          <input type="file" accept=".txt,.md" multiple onchange="handleBulkUpload(this)">
+        </label>
+      </div>
+      <button class="btn btn-primary btn-start" id="start-btn" onclick="startSession()" disabled>Begin session</button>
+    </div>
+  </aside>
+
+  <!-- Chat -->
+  <main class="chat-area">
+    <div class="chat-topbar" id="chat-topbar">
+      <div class="chat-topbar-legend" id="legend"></div>
+      <button class="btn btn-ghost topbar-download hidden" id="download-btn" onclick="downloadHistory()" title="Download chat history">↓ Save</button>
+    </div>
+
+    <div class="chat-messages" id="messages">
+      <div class="empty-state" id="empty-state">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+        <p>Define your personalities and begin a session to start the debate.</p>
+      </div>
+    </div>
+
+    <div id="streaming-brain" class="streaming-brain hidden">
+      <svg width="40" height="32" viewBox="0 0 60 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M30 7 C26 3 18 3 13 9 C9 7 4 11 4 18 C2 24 5 30 10 32 C8 37 11 43 17 44 C20 47 25 46 28 43 L30 41"/>
+        <path d="M30 7 C34 3 42 3 47 9 C51 7 56 11 56 18 C58 24 55 30 50 32 C52 37 49 43 43 44 C40 47 35 46 32 43 L30 41"/>
+        <path d="M30 7 C30 18 30 30 30 41" stroke-dasharray="3 4" opacity="0.45"/>
+        <path d="M13 21 C16 18 20 20 19 25"/>
+        <path d="M12 33 C15 31 19 33 18 37"/>
+        <path d="M47 21 C44 18 40 20 41 25"/>
+        <path d="M48 33 C45 31 41 33 42 37"/>
+      </svg>
+      <span class="streaming-brain-label">thinking…</span>
+    </div>
+
+    <div class="chat-input-area hidden" id="input-area">
+      <div class="input-wrapper">
+        <div class="input-highlight" id="input-highlight" aria-hidden="true"></div>
+        <textarea
+          id="message-input"
+          placeholder="What's on your mind?"
+          rows="1"
+          onkeydown="handleKey(event)"
+          oninput="syncHighlight(); autoResize(this)"
+        ></textarea>
+      </div>
+      <button id="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+  </main>
+
+</div>
+<!-- Personality Edit Modal -->
+<div class="modal-overlay hidden" id="edit-modal" onclick="closeModalOnOverlay(event)">
+  <div class="modal-panel">
+    <div class="modal-header">
+      <h3 class="modal-title">Edit Personality</h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-field">
+        <label class="modal-label" for="modal-name">Name</label>
+        <input class="modal-input" id="modal-name" type="text" placeholder="Personality name" oninput="updateStartBtn()">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label" for="modal-desc">Description</label>
+        <textarea class="modal-textarea" id="modal-desc" placeholder="Describe this personality…" rows="8"></textarea>
+      </div>
+      <label class="modal-upload">
+        ↑ Upload from file
+        <input type="file" accept=".txt,.md" onchange="handleModalFileUpload(this)">
+      </label>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" onclick="deleteModalCard()">Remove</button>
+      <div class="modal-actions-right">
+        <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveModal()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

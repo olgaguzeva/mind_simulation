@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
-from pathlib import Path
-
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
 from langchain_core.prompts import PromptTemplate
+from langchain_core.runnables import RunnableConfig
 
 from mind_simulation.models.personality_position import Position
 from mind_simulation.utils import parse_json
@@ -16,12 +15,11 @@ from mind_simulation.config import settings
 class SubPersonality:
     """One psychological sub-personality with its own identity and voice."""
 
-    def __init__(self, name: str, llm: BaseChatModel, prompt_path: Path) -> None:
+    def __init__(self, name: str, llm: BaseChatModel, *, description: str) -> None:
         self.name = name
         self._llm = llm
         template = PromptTemplate.from_file(settings.prompts_dir / "sub_personality.md")
-        description = prompt_path.read_text().strip()
-        self._system = template.format(personality_description=description)
+        self._system = template.format(name=name, personality_description=description)
         self._debate = (settings.prompts_schemas_dir / "debate.md").read_text().strip()
         self._final = (settings.prompts_schemas_dir / "final.md").read_text().strip()
         self._direct = (settings.prompts_schemas_dir / "direct.md").read_text().strip()
@@ -44,7 +42,7 @@ class SubPersonality:
         messages = [SystemMessage(content=system)] + (chat_history or []) + [HumanMessage(content=user_input)]
         return self._llm.invoke(messages).content.strip()
 
-    def speak_directly(self, user_input: str, chat_history: list[BaseMessage] | None = None) -> str:
+    def speak_directly(self, user_input: str, chat_history: list[BaseMessage] | None = None, callbacks: list | None = None) -> str:
         system = self._system + "\n\n" + self._direct
         messages = [SystemMessage(content=system)] + (chat_history or []) + [HumanMessage(content=user_input)]
-        return self._llm.invoke(messages).content.strip()
+        return self._llm.invoke(messages, config=RunnableConfig(callbacks=callbacks or [])).content.strip()

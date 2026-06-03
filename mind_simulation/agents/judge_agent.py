@@ -17,7 +17,9 @@ class Judge:
         self._system = (settings.prompts_dir / f"{self.name.lower()}.md").read_text().strip()
 
     def evaluate(self, state: DebateState) -> dict:
-        history_block = "Debate transcript:\n" + render_transcript(state["all_rounds"])
+        names = sorted({p.name for round_ in state["all_rounds"] for p in round_})
+        names_str = ", ".join(names)
+        history_block = f"Personalities in this debate: {names_str}\n\nDebate transcript:\n" + render_transcript(state["all_rounds"])
         if state["round_num"] >= settings.max_rounds:
             history_block += "\n\nThis is the final round. You MUST choose a winner and provide a summary."
         system = self._system + "\n\n" + history_block

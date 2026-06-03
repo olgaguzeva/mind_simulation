@@ -1,7 +1,5 @@
 # Mind Simulation
 
-![](images/banner.jpg)
-
 ## Introduction
 Mind Simulation is an experimental project exploring what happens when multiple AI agents behave as different inner sub-personalities of a single mind.  
 The idea was inspired by the Internal Family Systems (IFS) approach, which views the mind as a collection of different “parts” or inner personalities, each with its own emotions, motivations, and perspective.  
@@ -62,11 +60,6 @@ Each personality exposes:
 - `feels` — its internal emotional state
 - `would say` — the answer it wants to give the user
 
-You can also directly address a personality by mentioning it with @.  
-Example:  
-```text
-@Child what are you afraid of here?
-```
 
 ## Setup
 
@@ -124,6 +117,18 @@ Tracing is opt-in — if `LANGFUSE_PUBLIC_KEY` is not set the app runs normally 
 
 ## Run
 
+### Web UI
+
+```bash
+mind-web
+```
+
+Then open [http://localhost:8000](http://localhost:8000).
+
+The web interface lets you define personalities interactively, upload prompt files, and watch the debate stream live in the browser. No data is persisted — everything is lost when the session ends.
+
+### CLI
+
 ```bash
 mind-simulation
 ```
@@ -132,6 +137,12 @@ Or without installing:
 
 ```bash
 python main.py
+```
+
+You can address a personality directly by prefixing your message with `@`:
+
+```text
+@Critic what do you think about this?
 ```
 
 ## Example session
@@ -206,7 +217,16 @@ Let's do the dishes first, it's not the most exciting task, but getting it out o
 ## Project structure
 
 ```
-main.py                                   entry point
+main.py                                   CLI entry point
+web/
+  app.py                                  FastAPI application
+  run.py                                  uvicorn entry point (mind-web)
+  templates/
+    landing.html                          intro page
+    app.html                              single-page web UI
+  static/
+    style.css                             design system
+    app.js                                streaming chat + personality setup
 mind_simulation/
   mind.py                                 Mind class + CLI loop
   debate.py                               Debate class (runs rounds, speaks final)
@@ -226,13 +246,17 @@ mind_simulation/
     sub_personality.md                    shared personality framing template
     judge.md                              judge instructions
     sub_personalities/
-      child.md                            Child description
-      self.md                             Self description
-      teacher.md                          Teacher description
+      child.md                            Inner Child description
+      critic.md                           Inner Critic description
+      self.md                             Adult / Self description
     schemas/
       debate.md                           debate-round response schema
       final.md                            final-answer response schema
       direct.md                           direct-reply response schema
+assets/
+  banner.jpg                              hero image
 docker-compose.yml                        Langfuse + Postgres for local observability
 pyproject.toml
 ```
+
+![](assets/banner.jpg)
