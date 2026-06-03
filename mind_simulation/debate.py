@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
+
 from mind_simulation.agents.sub_personality_agent import SubPersonality
 from mind_simulation.models.judge_verdict import Verdict
 from mind_simulation.models.debate_state import DebateState
@@ -13,8 +15,10 @@ class Debate:
     def run_round(self, state: DebateState) -> dict:
         round_num = state["round_num"] + 1
         history = render_transcript(state["all_rounds"])
-        positions = [agent.debate(state["user_input"], history, round_num, state["chat_history"])
-                     for agent in self.agents]
+        with ThreadPoolExecutor(max_workers=len(self.agents)) as executor:
+            futures = [executor.submit(agent.debate, state["user_input"], history, round_num, state["chat_history"])
+                       for agent in self.agents]
+            positions = [f.result() for f in futures]
         return {"all_rounds": [positions], "round_num": round_num}
 
     def speak_final(self, state: DebateState) -> dict[str, object]:
